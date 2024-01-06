@@ -13,6 +13,8 @@ import Data.Time.Calendar.OrdinalDate (fromOrdinalDate)
 -- https://stackoverflow.com/questions/55079309/aeson-encoding-of-data-map-strict-map-with-custom-key-type-results-in-array-of-a
 data FunnyKey = FunnyKey String Rational Day deriving stock (Eq, Ord, Show)
 
+--
+--
 funnyKeyToText :: FunnyKey -> Text
 funnyKeyToText (FunnyKey i b d) = T.pack i <> T.pack "_" <> T.pack (show b) <> T.pack "_" <> T.pack (show d)
 
@@ -38,8 +40,11 @@ instance FromJSON FunnyKey where
     parseJSON v = case v of
         String someText -> funnyKeyFromText someText 
         _ -> fail "Unexpected non-String value"
+
 instance FromJSONKey FunnyKey where
   fromJSONKey = FromJSONKeyTextParser funnyKeyFromText
+--
+--
 
 funnyMap :: Map FunnyKey Int
 funnyMap = Data.Map.Strict.fromList [
