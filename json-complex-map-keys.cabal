@@ -23,6 +23,7 @@ executable json-complex-map-keys
         base,
         aeson,
         text,
+        time,
         bytestring,
         containers
 
